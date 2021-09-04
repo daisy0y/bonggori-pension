@@ -1,11 +1,11 @@
-//react
-import React, { useEffect } from 'react';
+//base
+import React from 'react';
 
-//package
+//import
 import styled from 'styled-components';
 
 //model
-import { mainNavList } from 'import/constant';
+import { mainNavList } from 'import';
 
 const StyledMainNav = styled.nav`
   ul {

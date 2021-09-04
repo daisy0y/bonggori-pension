@@ -1,8 +1,11 @@
+//base
 import React from 'react';
+
+//import
 import styled from 'styled-components';
 
-import { LoginButton } from 'components/Buttons';
-import { MainNav } from 'components/Menus';
+//component
+import { LoginButton, MainNav } from 'components';
 
 const StyledMainHeader = styled.header`
   display: flex;
