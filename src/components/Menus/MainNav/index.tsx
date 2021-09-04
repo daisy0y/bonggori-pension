@@ -1,11 +1,4 @@
-//base
-import React from 'react';
-
-//import
 import styled from 'styled-components';
-
-//model
-import { mainNavList } from 'import';
 
 const StyledMainNav = styled.nav`
   ul {
@@ -15,12 +8,20 @@ const StyledMainNav = styled.nav`
     margin-left: 30px;
   }
 `;
+
+const mainNavList = [
+  { name: '객실안내', address: '/rooms' },
+  { name: 'FAQ', address: '/faq' },
+  { name: '실시간예약', address: '/booking' },
+  { name: '정보안내', address: '/info' },
+];
+
 export const MainNav = () => {
   return (
     <StyledMainNav>
       <ul>
-        {mainNavList.map(nav => (
-          <li>{nav.name}</li>
+        {mainNavList.map((nav, idx) => (
+          <li key={idx}>{nav.name}</li>
         ))}
       </ul>
     </StyledMainNav>

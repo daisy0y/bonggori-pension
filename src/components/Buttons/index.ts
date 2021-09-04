@@ -1,2 +1,2 @@
-export * from './commonButton'
-export * from './loginButton'
+export * from './CommonButton';
+export * from './LoginButton';
