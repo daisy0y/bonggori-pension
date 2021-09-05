@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from 'recoil';
 
 import firebase from 'firebase';
 import { useCollection } from 'react-firebase-hooks/firestore';
@@ -17,7 +17,7 @@ const ThemeTest = styled.div`
 `;
 
 export const Test = () => {
-  const testValueComponent = useRecoilValue(testValue);
+  const testValueComponent = useRecoilValueLoadable(testValue);
   const [test, setTest] = useRecoilState(testState);
 
   const [value, loading, error] = useCollection(firebase.firestore().collection('imform'), {
@@ -32,7 +32,7 @@ export const Test = () => {
     getUsers();
   }, []);
 
-  console.log(testValueComponent, 'TVC');
+  // console.log(testValueComponent, 'TVC');
 
   return (
     <div className={styles.container}>
