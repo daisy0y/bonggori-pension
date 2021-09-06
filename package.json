@@ -12,6 +12,7 @@
   "dependencies": {
     "@types/styled-components": "^5.1.12",
     "antd": "^4.16.12",
+    "date-fns": "^2.23.0",
     "firebase": "^8.10.0",
     "next": "11.1.0",
     "react": "17.0.2",

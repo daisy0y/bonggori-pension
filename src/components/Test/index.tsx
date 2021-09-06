@@ -6,9 +6,10 @@ import { useCollection } from 'react-firebase-hooks/firestore';
 import styled from 'styled-components';
 import { Button } from 'antd';
 
-import { testState, testValue } from 'recoil/test';
+// import { testState, testValue } from 'recoil/test';
+import { testState } from 'recoil/test';
 
-import styles from 'styles/Home.module.css';
+
 import { useEffect } from 'react';
 import { getUsers } from 'utils/users';
 
@@ -17,25 +18,27 @@ const ThemeTest = styled.div`
 `;
 
 export const Test = () => {
-  const testValueComponent = useRecoilValue(testValue);
-  const [test, setTest] = useRecoilState(testState);
+  // const testValueComponent = useRecoilValue(testValue);
+  const [recoiltest, setRecoilTest] = useRecoilState(testState);
 
   const [value, loading, error] = useCollection(firebase.firestore().collection('imform'), {
     snapshotListenOptions: { includeMetadataChanges: true },
   });
 
   const handleState = () => {
-    setTest('바꼇당!!!');
+    setRecoilTest('바꼇당!!!');
   };
 
   useEffect(() => {
     getUsers();
   }, []);
 
-  console.log(testValueComponent, 'TVC');
+  console.log(recoiltest)
+
+  // console.log(testValueComponent, 'TVC');
 
   return (
-    <div className={styles.container}>
+    <div>
       <button onClick={handleState}>버튼이에오</button>
       {loading && <div>로딩중이다</div>}
       <Link href="/sample">
