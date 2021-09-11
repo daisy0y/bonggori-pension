@@ -1,5 +1,7 @@
 import Link from 'next/link';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useEffect } from 'react';
+
+import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from 'recoil';
 
 import firebase from 'firebase';
 import { useCollection } from 'react-firebase-hooks/firestore';
@@ -9,7 +11,6 @@ import { Button } from 'antd';
 import { testState } from 'recoil/test';
 
 import styles from 'styles/Home.module.css';
-import { useEffect } from 'react';
 import { getUsers } from 'lib/users';
 
 const ThemeTest = styled.div`
@@ -17,7 +18,7 @@ const ThemeTest = styled.div`
 `;
 
 export const Test = () => {
-  // const testValueComponent = useRecoilValue(testValue);
+  // const testValueComponent = useRecoilValueLoadable(testValue);
   const [test, setTest] = useRecoilState(testState);
 
   const [value, loading, error] = useCollection(firebase.firestore().collection('imform'), {

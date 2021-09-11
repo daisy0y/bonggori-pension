@@ -2,11 +2,13 @@ import styled from 'styled-components';
 
 import { useTabletSize } from 'lib/hooks';
 
+import { DEFALUT_HEIGHT_WITHOUT_HEADER } from 'lib/constants';
+
 import loginImg from 'assets/img/login-img.jpeg';
 
-const StyledLoginJoinLayout = styled.div<{ isPc: boolean }>`
+const StyledLoginJoinLayout = styled.div<{ isPc: boolean; heightSize: string }>`
   display: flex;
-  height: 100vh;
+  height: ${props => props.heightSize};
 `;
 
 const StyledImageArea = styled.div<{ imgUrl }>`
@@ -26,7 +28,7 @@ export const LoginJoinLayout = (props: LoginJoinLayoutProps) => {
   const { isPc } = useTabletSize();
 
   return (
-    <StyledLoginJoinLayout isPc={isPc}>
+    <StyledLoginJoinLayout isPc={isPc} heightSize={DEFALUT_HEIGHT_WITHOUT_HEADER}>
       {children}
       {isPc && <StyledImageArea imgUrl={loginImg} />}
     </StyledLoginJoinLayout>

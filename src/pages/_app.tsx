@@ -1,11 +1,13 @@
 import { RecoilRoot } from 'recoil';
 
 import { ThemeProvider } from 'styled-components';
-import 'antd/dist/antd.css';
+
+import { MainHeader, MainFooter } from '../components';
 
 import { initFirebase } from 'lib/initFirebase';
 
-import { CustomHeader } from 'components';
+import 'antd/dist/antd.css';
+import '../assets/reset.css';
 
 const theme = {
   testColor: '#ff4c01',
@@ -17,8 +19,9 @@ function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>
       <RecoilRoot>
-        <CustomHeader />
+        <MainHeader />
         <Component {...pageProps} />
+        <MainFooter />
       </RecoilRoot>
     </ThemeProvider>
   );
