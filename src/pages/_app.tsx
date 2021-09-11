@@ -1,12 +1,13 @@
-import Head from 'next/head';
 import { RecoilRoot } from 'recoil';
-import { ThemeProvider } from 'styled-components';
 
+import { ThemeProvider } from 'styled-components';
 import 'antd/dist/antd.css';
-import { initFirebase } from 'utils/initFirebase';
+
+import { initFirebase } from 'lib/initFirebase';
+
 import { CustomHeader } from 'components';
 
-const them = {
+const theme = {
   testColor: '#ff4c01',
 };
 
@@ -14,11 +15,9 @@ initFirebase();
 
 function MyApp({ Component, pageProps }) {
   return (
-    <ThemeProvider theme={them}>
+    <ThemeProvider theme={theme}>
       <RecoilRoot>
-        <Head>
-          <CustomHeader />
-        </Head>
+        <CustomHeader />
         <Component {...pageProps} />
       </RecoilRoot>
     </ThemeProvider>

@@ -6,11 +6,11 @@ import { useCollection } from 'react-firebase-hooks/firestore';
 import styled from 'styled-components';
 import { Button } from 'antd';
 
-import { testState, testValue } from 'recoil/test';
+import { testState } from 'recoil/test';
 
 import styles from 'styles/Home.module.css';
 import { useEffect } from 'react';
-import { getUsers } from 'utils/users';
+import { getUsers } from 'lib/users';
 
 const ThemeTest = styled.div`
   color: ${props => props.theme.testColor};

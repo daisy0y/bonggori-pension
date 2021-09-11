@@ -14,12 +14,10 @@ export const CustomHeader = () => {
     z-index: 1;
     height: 100px;
   `;
+
   return (
     <StyledHeader>
-      {/* <div> LOGIN</div> */}
-      <ul>
-        <li onClick={handleClickLogin}> LOGIN</li>
-      </ul>
+      <div onClick={handleClickLogin}> LOGIN</div>
     </StyledHeader>
   );
 };

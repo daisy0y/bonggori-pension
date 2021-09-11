@@ -17,11 +17,11 @@ export const testErrorValue = atom<Error>({
   default: null,
 });
 
-export const testValue = selector({
-  key: 'getTestValue',
-  get: async () => {
-    return await useCollection(firebase.firestore().collection('imform'), {
-      snapshotListenOptions: { includeMetadataChanges: true },
-    });
-  },
-});
+// export const testValue = selector({
+//   key: 'getTestValue',
+//   get: async () => {
+//     return await useCollection(firebase.firestore().collection('imform'), {
+//       snapshotListenOptions: { includeMetadataChanges: true },
+//     });
+//   },
+// });

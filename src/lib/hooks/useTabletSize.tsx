@@ -1,8 +1,7 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const useTabletSize = () => {
-  const [windowWidth, setWindowWidth] = useState<number>(undefined);
+  const [windowWidth, setWindowWidth] = useState<number>(0);
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);

@@ -1,26 +1,32 @@
-import styled from 'styled-components';
-import { Button, Input } from 'antd';
-
-import loginImg from 'assets/img/login-img.jpeg';
-import { useTabletSize } from 'utils/hooks/useTabletSize';
 import { useCallback } from 'react';
 import { useRouter } from 'next/router';
+import { useSetRecoilState } from 'recoil';
+import { userEmailState } from 'recoil/auth';
 
-const StyledLoginForm = styled.div<{ isPc: boolean }>`
+import styled from 'styled-components';
+import { Button, Form } from 'antd';
+
+import { LoginJoinFormInput, LoginJoinLayout } from 'components';
+import { useTabletSize } from 'lib/hooks';
+import { login } from 'apis/auth';
+
+const StyledLogin = styled.div<{ isPc: boolean }>`
+  width: ${props => (props.isPc ? '50%' : '100%')};
   display: flex;
-  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  p {
+    font-size: 23px;
+    font-weight: bold;
+  }
+`;
 
-  /* margin: ${props => (props.isPc ? 0 : 'auto')}; */
-  .form-area {
-    width: ${props => (props.isPc ? '50%' : '100%')};
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    p {
-      font-size: 23px;
-      font-weight: bold;
-    }
+const StyledLoginForm = styled(Form)`
+  margin: auto;
+  .ant-form-item-explain.ant-form-item-explain-error {
+    position: absolute;
+    top: 100px;
   }
 `;
 
@@ -56,21 +62,17 @@ const StyledLoginExtraArea = styled.div`
 `;
 
 const StyledLoginButton = styled(Button)`
+  background-color: black !important;
+  color: white !important;
+  font-weight: bold;
   width: 100%;
-  background-color: black;
-  color: white;
+  border: none;
   height: 82px;
-  font-size: 23px;
-`;
-
-const StyledImageArea = styled.div<{ imgUrl }>`
-  background-image: url(${props => props.imgUrl.src});
-  width: 50%;
-  background-repeat: no-repeat;
-  background-size: cover;
 `;
 
 export const LoginForm = () => {
+  const setUserEmailState = useSetRecoilState(userEmailState);
+
   const { isPc } = useTabletSize();
   const router = useRouter();
 
@@ -78,29 +80,36 @@ export const LoginForm = () => {
     router.push('join');
   }, []);
 
+  const handleSubmit = useCallback(
+    async values => {
+      const { id, pw } = values;
+
+      const userEmail = await login(id, pw);
+
+      if (userEmail) {
+        router.push('/');
+        setUserEmailState(userEmail);
+      }
+    },
+    [login],
+  );
+
   return (
-    <StyledLoginForm isPc={isPc}>
-      <div className="form-area">
+    <LoginJoinLayout>
+      <StyledLogin isPc={isPc}>
         <p>LOGIN</p>
-        <StyledLoginArea>
-          <StyledInPut>
-            <span>ID</span>
-            <Input bordered={false} placeholder="아이디를 입력해주세요" />
-          </StyledInPut>
-          <StyledInPut>
-            <span>PW</span>
-            <Input bordered={false} placeholder="비밀번호를 입력해주세요" />
-          </StyledInPut>
+        <StyledLoginForm onFinish={handleSubmit}>
+          <LoginJoinFormInput name="id" label="ID" rules={[{ required: true, message: 'ID를 입력해주세요' }]} />
+          <LoginJoinFormInput name="pw" label="PW" rules={[{ required: true, message: '비밀번호를 입력해주세요' }]} />
           <StyledLoginExtraArea>
             <div onClick={handleClickJoin}>회원가입</div>
             <div>아이디/비밀번호 찾기</div>
           </StyledLoginExtraArea>
-          <div>
-            <StyledLoginButton>로그인</StyledLoginButton>
-          </div>
-        </StyledLoginArea>
-      </div>
-      {isPc && <StyledImageArea imgUrl={loginImg} />}
-    </StyledLoginForm>
+          <Form.Item>
+            <StyledLoginButton htmlType="submit">로그인</StyledLoginButton>
+          </Form.Item>
+        </StyledLoginForm>
+      </StyledLogin>
+    </LoginJoinLayout>
   );
 };
