@@ -11,7 +11,7 @@ const StyledLoginJoinLayout = styled.div<{ isPc: boolean; heightSize: string }>`
   height: ${props => props.heightSize};
 `;
 
-const StyledImageArea = styled.div<{ imgUrl }>`
+const StyledImageArea = styled.div<{ imgUrl: { src: string } }>`
   background-image: url(${props => props.imgUrl.src});
   width: 50%;
   background-repeat: no-repeat;
