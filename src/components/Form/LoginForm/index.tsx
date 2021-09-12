@@ -33,7 +33,7 @@ const StyledLoginExtraArea = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  height: 130px;
+  min-height: 130px;
   align-items: center;
 `;
 
