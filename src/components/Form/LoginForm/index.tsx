@@ -38,8 +38,8 @@ const StyledLoginExtraArea = styled.div`
 `;
 
 const StyledLoginButton = styled(Button)`
-  background-color: #000000 !important;
-  color: white !important;
+  background-color: #000 !important;
+  color: #fff !important;
   font-weight: bold;
   width: 100%;
   border: none;

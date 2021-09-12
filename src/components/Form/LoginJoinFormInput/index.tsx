@@ -2,7 +2,7 @@ import { Form, FormItemProps, Input, InputProps } from 'antd';
 import styled from 'styled-components';
 
 const StyledLoginJoinFormInput = styled(Form.Item)`
-  border-bottom: 1px solid #000000;
+  border-bottom: 1px solid #000;
   height: 100px;
   align-items: center;
   margin-bottom: 24px !important;
