@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useRef } from 'react';
 import firebase from 'firebase';
 
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollection, useCollectionData } from 'react-firebase-hooks/firestore';
 import { Button, Form, Input, Spin } from 'antd';
 import { formatRelative } from 'date-fns';
 import styled from 'styled-components';
 import { SendOutlined } from '@ant-design/icons';
+import { setSession, getSession } from 'lib/storage';
 
 import { Messages } from 'components';
 
@@ -86,7 +88,7 @@ const StyledChatForm = styled(Form)`
     .submit-button {
       all: unset;
       position: absolute;
-      top: -6px;
+      top: 6px;
       right: 10px;
       color: rgb(86, 152, 255);
       font-size: 1.3rem;
@@ -95,17 +97,11 @@ const StyledChatForm = styled(Form)`
 
   .input-container {
     position: relative;
-    /* .chat-input {
-        width: 100%;
-        position: absolute;
-        padding-right: 40px;
-        bottom: 0;
-    } */
+
     input.chat-input {
       width: 20vw;
       min-width: 250px;
-      /* position: absolute; */
-      /* left: 0; */
+      padding-right: 40px;
       border: 0;
       border-radius: 0 0 5px 5px;
       height: 50px;
@@ -117,19 +113,25 @@ export const ChatRoom = (props: ChatRoomProps) => {
   const [value, loading] = useCollection<MessageTypes>(
     firebase.firestore().collection('messages').orderBy('createdAt'),
   );
+  const [user] = useAuthState(firebase.auth());
+
   const [form] = Form.useForm();
   const messageRef = useRef<HTMLDivElement>(null);
-  const userId = 'uid';
+  const anonymous = getSession('anonymous');
+  const userId = user ? user.uid : anonymous;
   const handleSubmit = formData => {
     if (!formData.message) {
       alert('메세지를 입력하세요');
     } else {
-      firebase.firestore().collection('messages').add({
-        text: formData.message,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        userName: '외않되',
-        uid: 'uid',
-      });
+      firebase
+        .firestore()
+        .collection('messages')
+        .add({
+          text: formData.message,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          userName: user ? user.email : anonymous,
+          uid: userId,
+        });
       messageRef.current.scrollIntoView({ block: 'end', behavior: 'smooth' });
       form.setFieldsValue({ message: '' });
     }
