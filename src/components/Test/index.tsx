@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useEffect } from 'react';
 
-import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 import firebase from 'firebase';
 import { useCollection } from 'react-firebase-hooks/firestore';

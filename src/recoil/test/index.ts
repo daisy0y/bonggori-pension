@@ -1,6 +1,4 @@
-import firebase from 'firebase';
-import { useCollection } from 'react-firebase-hooks/firestore';
-import { atom, selector } from 'recoil';
+import { atom } from 'recoil';
 
 export const testState = atom({
   key: 'testState',
@@ -16,12 +14,3 @@ export const testErrorValue = atom<Error>({
   key: 'testErrorValue',
   default: null,
 });
-
-// export const testValue = selector({
-//   key: 'getTestValue',
-//   get: async () => {
-//     return await useCollection(firebase.firestore().collection('imform'), {
-//       snapshotListenOptions: { includeMetadataChanges: true },
-//     });
-//   },
-// });
