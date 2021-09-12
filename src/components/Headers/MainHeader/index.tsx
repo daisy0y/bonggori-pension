@@ -1,7 +1,9 @@
-import styled from 'styled-components';
-import { LoginButton, MainNav } from 'components';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
+
+import styled from 'styled-components';
+
+import { LoginButton, MainNav } from 'components';
 
 const StyledMainHeader = styled.header`
   display: flex;

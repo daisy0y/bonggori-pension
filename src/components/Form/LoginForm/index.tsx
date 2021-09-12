@@ -8,7 +8,7 @@ import { Button, Form } from 'antd';
 
 import { LoginJoinFormInput, LoginJoinLayout } from 'components';
 import { useTabletSize } from 'lib/hooks';
-import { login } from 'apis/auth';
+import { loginApi } from 'apis/auth';
 
 const StyledLogin = styled.div<{ isPc: boolean }>`
   width: ${props => (props.isPc ? '50%' : '100%')};
@@ -27,29 +27,6 @@ const StyledLoginForm = styled(Form)`
   .ant-form-item-explain.ant-form-item-explain-error {
     position: absolute;
     top: 100px;
-  }
-`;
-
-const StyledLoginArea = styled.div`
-  width: 90%;
-  max-width: 500px;
-  padding: 10px;
-`;
-
-const StyledInPut = styled.div`
-  border-bottom: 1px solid black;
-  width: 100%;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  span {
-    font-size: 25px;
-    font-weight: bold;
-    width: 40px;
-  }
-  input {
-    width: 90%;
-    font-size: 25px;
   }
 `;
 
@@ -84,14 +61,14 @@ export const LoginForm = () => {
     async values => {
       const { id, pw } = values;
 
-      const userEmail = await login(id, pw);
+      const userEmail = await loginApi(id, pw);
 
       if (userEmail) {
         router.push('/');
         setUserEmailState(userEmail);
       }
     },
-    [login],
+    [loginApi],
   );
 
   return (
@@ -99,8 +76,25 @@ export const LoginForm = () => {
       <StyledLogin isPc={isPc}>
         <p>LOGIN</p>
         <StyledLoginForm onFinish={handleSubmit}>
-          <LoginJoinFormInput name="id" label="ID" rules={[{ required: true, message: 'ID를 입력해주세요' }]} />
-          <LoginJoinFormInput name="pw" label="PW" rules={[{ required: true, message: '비밀번호를 입력해주세요' }]} />
+          <LoginJoinFormInput
+            name="id"
+            label="ID"
+            rules={[
+              { required: true, message: 'ID를 입력해주세요' },
+              {
+                type: 'email',
+                message: 'email 형식에 맞지 않습니다.',
+              },
+            ]}
+          />
+          <LoginJoinFormInput
+            name="pw"
+            label="PW"
+            rules={[{ required: true, message: '비밀번호를 입력해주세요' }]}
+            inputProps={{
+              type: 'password',
+            }}
+          />
           <StyledLoginExtraArea>
             <div onClick={handleClickJoin}>회원가입</div>
             <div>아이디/비밀번호 찾기</div>

@@ -5,6 +5,7 @@ const StyledLoginJoinFormInput = styled(Form.Item)`
   border-bottom: 1px solid black;
   height: 100px;
   align-items: center;
+  margin-bottom: 24px !important;
   .ant-form-item-label {
     width: 100px;
     text-align: left;

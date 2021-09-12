@@ -1,7 +1,8 @@
 import firebase from 'firebase';
 import Cookies from 'universal-cookie';
+import { message } from 'antd';
 
-export const login = async (email: string, password: string) => {
+export const loginApi = async (email: string, password: string) => {
   try {
     const res = await firebase.auth().signInWithEmailAndPassword(email, password);
     const idToken = (await res.user.getIdToken()).toString;
@@ -14,5 +15,27 @@ export const login = async (email: string, password: string) => {
     return userEmail;
   } catch (error) {
     console.error('Error 발생' + error);
+    message.error('로그인에 실패했습니다. 다시 시도해주세요.');
+  }
+};
+
+export const joinApi = async (email: string, password: string) => {
+  try {
+    await firebase.auth().createUserWithEmailAndPassword(email, password);
+  } catch (error) {
+    console.error('Error 발생' + error);
+    message.error('회원가입에 실패 했습니다. 다시 시도해주세요.');
+  }
+};
+
+export const logoutApi = async () => {
+  try {
+    await firebase.auth().signOut();
+    const cookies = new Cookies();
+
+    cookies.remove('id_token');
+  } catch (error) {
+    console.error('Error 발생' + error);
+    message.error('로그아웃에 실패했습니다. 다시 시도해주세요.');
   }
 };

@@ -1,11 +1,14 @@
+import { useRouter } from 'next/router';
+
 import { Form, Button } from 'antd';
+import { useForm } from 'antd/lib/form/Form';
 import styled from 'styled-components';
 
 import { LoginJoinLayout, LoginJoinFormInput } from 'components';
+
 import { useTabletSize } from 'lib/hooks';
 
-import React from 'react';
-import { signUp } from 'lib/auth';
+import { joinApi } from 'apis/auth';
 
 const StyledJoin = styled.div<{ isPc: boolean }>`
   width: ${props => (props.isPc ? '50%' : '100%')};
@@ -39,25 +42,29 @@ const StyledButton = styled(Button)`
 
 export const JoinForm = () => {
   const { isPc } = useTabletSize();
+  const router = useRouter();
+
+  const [form] = useForm();
 
   const handleSubmit = async values => {
     const { id, pw } = values;
-    try {
-      await signUp(id, pw);
-    } catch (error) {
-      console.error(error);
-    }
+
+    await joinApi(id, pw);
+    router.push('/login');
   };
 
   return (
     <LoginJoinLayout>
       <StyledJoin isPc={isPc}>
         <p className="join-title">JOIN</p>
-        <StyledJoinForm onFinish={handleSubmit}>
+        <StyledJoinForm onFinish={handleSubmit} form={form}>
           <LoginJoinFormInput
             name="id"
             label="ID"
-            rules={[{ required: true, message: '이메일을 입력해주세요' }]}
+            rules={[
+              { required: true, message: '이메일을 입력해주세요' },
+              { type: 'email', message: 'email 형식에 맞지 않습니다.' },
+            ]}
             inputProps={{
               placeholder: '이메일',
             }}
@@ -68,14 +75,26 @@ export const JoinForm = () => {
             rules={[{ required: true, message: '비밀번호를 입력해주세요' }]}
             inputProps={{
               placeholder: '비밀번호',
+              type: 'password',
             }}
           />
           <LoginJoinFormInput
             name="cpw"
             label="CPW"
-            rules={[{ required: true, message: '비밀번호 확인을 입력해주세요' }]}
+            rules={[
+              { required: true, message: '비밀번호 확인을 입력해주세요' },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue('pw') === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(new Error('비밀번호와 일치하지 않습니다.'));
+                },
+              }),
+            ]}
             inputProps={{
               placeholder: '비밀번호 확인',
+              type: 'password',
             }}
           />
           <Form.Item>
