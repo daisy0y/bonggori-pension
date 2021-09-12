@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from 'recoil';
 
 import firebase from 'firebase';
 import { useCollection } from 'react-firebase-hooks/firestore';
@@ -21,6 +21,8 @@ export const Test = () => {
   // const testValueComponent = useRecoilValue(testValue);
   const [recoiltest, setRecoilTest] = useRecoilState(testState);
 
+  const [test, setTest] = useRecoilState(testState);
+
   const [value, loading, error] = useCollection(firebase.firestore().collection('imform'), {
     snapshotListenOptions: { includeMetadataChanges: true },
   });
@@ -33,7 +35,7 @@ export const Test = () => {
     getUsers();
   }, []);
 
-  console.log(recoiltest)
+
 
   // console.log(testValueComponent, 'TVC');
 

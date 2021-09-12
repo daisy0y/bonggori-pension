@@ -1,4 +1,4 @@
-import { Chat, Test } from 'components';
+import { Test } from 'components';
 import React from 'react'
 import { useCollection } from 'react-firebase-hooks/firestore';
 import firebase from 'firebase';
@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <div className={styles.container} style={{ position: 'relative' }}>
       <Test />
-      <Chat />
+
     </div>
   );
 }
