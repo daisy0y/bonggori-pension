@@ -3,6 +3,8 @@ import { useCallback } from 'react';
 
 import styled from 'styled-components';
 
+import { MAIN } from 'lib/routers';
+
 import { LoginButton, MainNav } from 'components';
 
 const StyledMainHeader = styled.header`
@@ -21,7 +23,7 @@ export const MainHeader = () => {
   const router = useRouter();
 
   const handleGoMain = useCallback(() => {
-    router.push('/');
+    router.push(MAIN);
   }, []);
 
   return (

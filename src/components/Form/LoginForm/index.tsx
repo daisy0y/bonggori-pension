@@ -7,7 +7,10 @@ import styled from 'styled-components';
 import { Button, Form } from 'antd';
 
 import { LoginJoinFormInput, LoginJoinLayout } from 'components';
+
 import { useTabletSize } from 'lib/hooks';
+import { JOIN, MAIN } from 'lib/routers';
+
 import { loginApi } from 'apis/auth';
 
 const StyledLogin = styled.div<{ isPc: boolean }>`
@@ -16,18 +19,14 @@ const StyledLogin = styled.div<{ isPc: boolean }>`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  p {
-    font-size: 23px;
+  h2 {
+    font-size: 2rem;
     font-weight: bold;
   }
 `;
 
 const StyledLoginForm = styled(Form)`
   margin: auto;
-  .ant-form-item-explain.ant-form-item-explain-error {
-    position: absolute;
-    top: 100px;
-  }
 `;
 
 const StyledLoginExtraArea = styled.div`
@@ -39,12 +38,13 @@ const StyledLoginExtraArea = styled.div`
 `;
 
 const StyledLoginButton = styled(Button)`
-  background-color: black !important;
+  background-color: #000000 !important;
   color: white !important;
   font-weight: bold;
   width: 100%;
   border: none;
   height: 82px;
+  font-size: 1.5rem;
 `;
 
 export const LoginForm = () => {
@@ -54,7 +54,7 @@ export const LoginForm = () => {
   const router = useRouter();
 
   const handleClickJoin = useCallback(() => {
-    router.push('join');
+    router.push(JOIN);
   }, []);
 
   const handleSubmit = useCallback(
@@ -64,7 +64,7 @@ export const LoginForm = () => {
       const userEmail = await loginApi(id, pw);
 
       if (userEmail) {
-        router.push('/');
+        router.push(MAIN);
         setUserEmailState(userEmail);
       }
     },
@@ -74,7 +74,7 @@ export const LoginForm = () => {
   return (
     <LoginJoinLayout>
       <StyledLogin isPc={isPc}>
-        <p>LOGIN</p>
+        <h2>LOGIN</h2>
         <StyledLoginForm onFinish={handleSubmit}>
           <LoginJoinFormInput
             name="id"

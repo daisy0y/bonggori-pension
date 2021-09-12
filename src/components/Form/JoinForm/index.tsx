@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { LoginJoinLayout, LoginJoinFormInput } from 'components';
 
 import { useTabletSize } from 'lib/hooks';
+import { LOGIN } from 'lib/routers';
 
 import { joinApi } from 'apis/auth';
 
@@ -16,8 +17,8 @@ const StyledJoin = styled.div<{ isPc: boolean }>`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  p {
-    font-size: 23px;
+  h2 {
+    font-size: 2rem;
     font-weight: bold;
   }
 `;
@@ -31,13 +32,14 @@ const StyledJoinForm = styled(Form)`
 `;
 
 const StyledButton = styled(Button)`
-  background-color: black !important;
+  background-color: #000000 !important;
   color: white !important;
   font-weight: bold;
   width: 100%;
   border: none;
   height: 82px;
   margin-top: 50px;
+  font-size: 1.5rem;
 `;
 
 export const JoinForm = () => {
@@ -50,13 +52,13 @@ export const JoinForm = () => {
     const { id, pw } = values;
 
     await joinApi(id, pw);
-    router.push('/login');
+    router.push(LOGIN);
   };
 
   return (
     <LoginJoinLayout>
       <StyledJoin isPc={isPc}>
-        <p className="join-title">JOIN</p>
+        <h2>JOIN</h2>
         <StyledJoinForm onFinish={handleSubmit} form={form}>
           <LoginJoinFormInput
             name="id"

@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { isLoginSelector } from 'recoil/auth';
 
+import { MAIN } from 'lib/routers';
+
 import { LoginForm } from 'components';
 
 const LoginPage = () => {
@@ -11,7 +13,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (isLogin) {
-      router.push('/');
+      router.push(MAIN);
     }
   }, [isLogin]);
 

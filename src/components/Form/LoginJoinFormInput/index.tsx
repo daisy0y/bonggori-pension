@@ -2,7 +2,7 @@ import { Form, FormItemProps, Input, InputProps } from 'antd';
 import styled from 'styled-components';
 
 const StyledLoginJoinFormInput = styled(Form.Item)`
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #000000;
   height: 100px;
   align-items: center;
   margin-bottom: 24px !important;
@@ -11,7 +11,7 @@ const StyledLoginJoinFormInput = styled(Form.Item)`
     text-align: left;
   }
   .ant-form-item-label > label {
-    font-size: 30px;
+    font-size: 2rem;
     font-weight: bold;
   }
 
@@ -21,7 +21,7 @@ const StyledLoginJoinFormInput = styled(Form.Item)`
 
   .ant-input {
     height: 90px;
-    font-size: 30px;
+    font-size: 2rem;
   }
 
   .ant-form-item-explain.ant-form-item-explain-error {

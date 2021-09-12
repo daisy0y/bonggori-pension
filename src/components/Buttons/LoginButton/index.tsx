@@ -7,6 +7,8 @@ import { CommonButton } from 'components';
 
 import { logoutApi } from 'apis/auth';
 
+import { LOGIN } from 'lib/routers';
+
 export const LoginButton = () => {
   const setUserEmailState = useSetRecoilState(userEmailState);
   const isLogin = useRecoilValue(isLoginSelector);
@@ -16,7 +18,7 @@ export const LoginButton = () => {
     if (isLogin) {
       logout();
     } else {
-      router.push('/login');
+      router.push(LOGIN);
     }
   }, [isLogin]);
 
