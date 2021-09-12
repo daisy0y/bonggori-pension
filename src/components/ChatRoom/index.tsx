@@ -1,13 +1,13 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import firebase from 'firebase';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useCollection, useCollectionData } from 'react-firebase-hooks/firestore';
+import { useCollection } from 'react-firebase-hooks/firestore';
 import { Button, Form, Input, Spin } from 'antd';
 import { formatRelative } from 'date-fns';
 import styled from 'styled-components';
 import { SendOutlined } from '@ant-design/icons';
-import { setSession, getSession } from 'lib/storage';
+import { getSession } from 'lib/storage';
 
 import { Messages } from 'components';
 
@@ -119,6 +119,7 @@ export const ChatRoom = (props: ChatRoomProps) => {
   const messageRef = useRef<HTMLDivElement>(null);
   const anonymous = getSession('anonymous');
   const userId = user ? user.uid : anonymous;
+
   const handleSubmit = formData => {
     if (!formData.message) {
       alert('메세지를 입력하세요');
