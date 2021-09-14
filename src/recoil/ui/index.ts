@@ -1,6 +1,6 @@
-import { atom } from 'recoil';
+import { atom, selector, useRecoilState } from 'recoil';
 
-export const dataLoading = atom({
-  key: 'loading',
+export const dataLoadState = atom({
+  key: 'dataLoadState',
   default: false,
 });

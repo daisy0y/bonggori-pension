@@ -1,7 +1,7 @@
 import { Spin } from 'antd';
 import React from 'react';
 import { useRecoilValue } from 'recoil';
-import { dataLoading } from 'recoil/ui';
+import { dataLoadState } from 'recoil/ui';
 import styled from 'styled-components';
 const StyledLoading = styled.div`
   position: fixed;
@@ -14,7 +14,7 @@ const StyledLoading = styled.div`
   background: rgba(0, 0, 0, 0.6);
 `;
 export const Loading = () => {
-  const isLoading = useRecoilValue(dataLoading);
+  const isLoading = useRecoilValue(dataLoadState);
 
   return isLoading ? (
     <StyledLoading>
