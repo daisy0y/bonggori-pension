@@ -15,6 +15,13 @@
     "jsx": "preserve",
     "baseUrl": "src"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/_document.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/pages/_document.ts",
+    "src/components/Headers/index.tsㅌ",
+    "src/utils/resetFirestore.js"
+  ],
   "exclude": ["node_modules"]
 }

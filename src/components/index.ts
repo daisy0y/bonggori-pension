@@ -3,4 +3,7 @@ export * from './Headers';
 export * from './Footer';
 export * from './Buttons';
 export * from './Menus';
+export * from './Tabs';
+export * from './Banners';
 export * from './Fallback';
+export * from './Items';

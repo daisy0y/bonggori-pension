@@ -1,23 +1,55 @@
-import React, { useEffect } from 'react';
-
+import { useEffect, useState } from 'react';
+import { useSetRecoilState } from 'recoil';
+import { dataLoadState } from 'recoil/ui';
 import firebase from 'firebase';
-import { atom, useRecoilState } from 'recoil';
+import 'firebase/firestore';
+import { firestoreData } from 'models/Firestore/firestore.model';
 
-import { useCollection } from 'react-firebase-hooks/firestore';
-
-import { dataLoading } from 'recoil/ui';
-
-export const useFirestore = (collection: string) => {
-  const [lodingState, setLodingState] = useRecoilState(dataLoading);
-
-  const [value, loading, error] = useCollection(firebase.firestore().collection(collection), {
-    snapshotListenOptions: { includeMetadataChanges: true },
+export const firestore = firebase.firestore();
+export const useFirestore = (ref: firebase.firestore.CollectionReference | firebase.firestore.Query, props: any[]) => {
+  const setLoadingState = useSetRecoilState(dataLoadState);
+  const [data, setData] = useState<firestoreData>({
+    data: [],
+    loading: true,
+    error: null,
   });
-  const data = value?.docs.map(item => item.data());
 
   useEffect(() => {
-    setLodingState(loading);
-  }, [loading]);
+    // initialize data
+    setData({
+      data: [],
+      loading: true,
+      error: null,
+    });
 
-  return { data, lodingState, error };
+    // fetch data from firestore
+    ref
+      .get()
+      .then(snapshot => {
+        setData({
+          data: snapshot.docs.map(doc => doc.data()),
+          loading: false,
+          error: null,
+        });
+      })
+      .catch(error => {
+        setData({
+          data: [],
+          loading: false,
+          error,
+        });
+      });
+  }, props);
+
+  useEffect(() => {
+    setLoadingState(data.loading);
+  }, [data.loading]);
+
+  return data;
 };
+
+export const useRoomTypes = () => useFirestore(firestore.collection('roomTypes'), []);
+export const useRooms = (room_type: string) =>
+  useFirestore(firestore.collection('rooms').where('roomType', '==', firestore.doc(`roomTypes/${room_type}`)), [
+    room_type,
+  ]);
