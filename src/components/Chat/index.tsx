@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+
 import styled from 'styled-components';
 import { WechatOutlined } from '@ant-design/icons';
+
 import { ChatRoom } from 'components/ChatRoom';
 
 const StyledChat = styled.div`
@@ -15,7 +17,7 @@ const StyledChat = styled.div`
 `;
 
 export const Chat = () => {
-  const [isToggle, setIsToggle] = useState(false);
+  const [isToggle, setIsToggle] = useState<boolean>(false);
   const handleToggle = () => {
     setIsToggle(prev => !prev);
   };
