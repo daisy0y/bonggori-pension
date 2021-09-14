@@ -1,9 +1,3 @@
-import { Test } from 'components';
-
 export default function Home() {
-  return (
-    <div>
-      <Test />
-    </div>
-  );
+  return <div>HOME</div>;
 }
