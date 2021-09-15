@@ -1,12 +1,14 @@
+import React, { ReactNode } from 'react';
+
 import { Tabs, TabsProps } from 'antd';
-import { MainRoomsList } from 'models/Rooms/rooms.model';
-import React, { HTMLAttributes, ReactNode } from 'react';
+
+import { MainRooms } from 'models/Rooms/rooms.model';
 
 const { TabPane } = Tabs;
 
 interface RoomTabProps extends TabsProps {
-  tabList: MainRoomsList[];
-  onChange: (e) => void;
+  tabList: MainRooms[];
+  onChange: (tab) => void;
   roomContent: ReactNode;
 }
 

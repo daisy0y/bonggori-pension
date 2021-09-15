@@ -1,14 +1,9 @@
-import React, { useState, useEffect, useMemo, ChangeEvent, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import Head from 'next/head';
 
-import firebase from 'firebase';
-import { useCollection } from 'react-firebase-hooks/firestore';
-
 import { CommonTab as RoomsTab, CommonBanner, RoomsItem } from 'components';
-import { MainRoomsList, RoomsListContent } from 'models/Rooms/rooms.model';
-import { useRoomTypes, useRooms, useFirestore, firestore } from '../hooks/useFirestore/index';
-import { useSetRecoilState, useRecoilValue } from 'recoil';
-import { roomsList } from 'recoil/rooms';
+import { MainRooms, RoomContent } from 'models/Rooms/rooms.model';
+import { useRoomTypes, useRooms } from 'hooks';
 
 const Rooms = () => {
   const { data: tabList } = useRoomTypes();
@@ -16,7 +11,7 @@ const Rooms = () => {
 
   // TODO: stop fetching data from firestore when all data(of tabs) are fetched
   const { data: roomList } = useRooms(currentTab);
-  const [rooms, setRooms] = useState<RoomsListContent[]>(roomList as RoomsListContent[]);
+  const [rooms, setRooms] = useState<RoomContent[]>(roomList as RoomContent[]);
 
   const roomContent = useMemo(
     () => rooms.map((room, idx) => <RoomsItem key={idx} roomName={room.roomName} roomImage="" />),
@@ -32,7 +27,7 @@ const Rooms = () => {
 
   useEffect(() => {
     if (roomList.length > 0) {
-      setRooms(roomList as RoomsListContent[]);
+      setRooms(roomList as RoomContent[]);
     }
   }, [roomList]);
 
@@ -43,7 +38,7 @@ const Rooms = () => {
       </Head>
       <div>
         <CommonBanner />
-        <RoomsTab tabList={(tabList as MainRoomsList[]) || []} onChange={getRoomsData} roomContent={roomContent} />
+        <RoomsTab tabList={(tabList as MainRooms[]) || []} onChange={getRoomsData} roomContent={roomContent} />
       </div>
     </>
   );

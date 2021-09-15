@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 
-export const roomsList = atom({
-  key: 'roomsList',
+export const roomsState = atom({
+  key: 'roomsState',
   default: [],
 });

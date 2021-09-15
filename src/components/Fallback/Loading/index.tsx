@@ -1,8 +1,9 @@
-import { Spin } from 'antd';
-import React from 'react';
 import { useRecoilValue } from 'recoil';
 import { dataLoadState } from 'recoil/ui';
+
+import { Spin } from 'antd';
 import styled from 'styled-components';
+
 const StyledLoading = styled.div`
   position: fixed;
   width: 100vw;

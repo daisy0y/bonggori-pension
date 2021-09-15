@@ -47,9 +47,3 @@ export const useFirestore = (ref: firebase.firestore.CollectionReference | fireb
 
   return data;
 };
-
-export const useRoomTypes = () => useFirestore(firestore.collection('roomTypes'), []);
-export const useRooms = (room_type: string) =>
-  useFirestore(firestore.collection('rooms').where('roomType', '==', firestore.doc(`roomTypes/${room_type}`)), [
-    room_type,
-  ]);
