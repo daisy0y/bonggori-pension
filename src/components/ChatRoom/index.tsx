@@ -147,6 +147,14 @@ export const ChatRoom = (props: ChatRoomProps) => {
     return formattedDate;
   };
 
+  const removeChatData = (seconds: number, id: string) => {
+    const now = new Date().getTime() / 1000;
+    const messageDate = seconds;
+    if (now - messageDate > 43200) {
+      firebase.firestore().collection('messages').doc(id).delete();
+    }
+  };
+
   useEffect(() => {
     messageRef.current.scrollIntoView({ block: 'end', behavior: 'smooth' });
   }, [value]);
@@ -165,11 +173,7 @@ export const ChatRoom = (props: ChatRoomProps) => {
       <section className="message-section">
         <ul className="message-list">
           {value?.docs.map((msg, index) => {
-            const now = new Date().getTime() / 1000;
-            const messageDate = msg.data().createdAt?.seconds;
-            if (now - messageDate > 43200) {
-              firebase.firestore().collection('messages').doc(msg.id).delete();
-            }
+            removeChatData(msg.data().createdAt?.seconds, msg.id);
             const message = {
               ...msg.data(),
               id: msg.id,
