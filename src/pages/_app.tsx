@@ -3,7 +3,7 @@ import { RecoilRoot } from 'recoil';
 
 import { ThemeProvider } from 'styled-components';
 
-import { MainHeader, MainFooter, Chat } from '../components';
+import { MainHeader, MainFooter, Loading, Chat } from 'components';
 
 import { initFirebase } from 'lib/initFirebase';
 
@@ -20,6 +20,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>
       <RecoilRoot>
+        <Loading />
         <MainHeader />
         <Component {...pageProps} />
         <Chat />

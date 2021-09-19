@@ -18,6 +18,68 @@ You can start editing the page by modifying `pages/index.js`. The page auto-upda
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
+## Reset Firestore Database
+
+> :warning:**WARNING**
+> execution of this command will **reset** your database. If you have important data in the database, do not run this command.
+
+> :warning:**SECURITY ALERT**
+> do not upload your `firebase_secret.json` file to git repository. Use it in **local repository only**.
+
+Requirement
+
+1. firebase-admin(node.js firebase module)
+
+```bash
+npm install --save-dev firebase-admin
+```
+
+2. firebase_secret.json
+
+```
+* download secret file from firebase console
+(firebase console > project settings > service account > create new service account)
+
+url: https://console.firebase.google.com/project/{your project id}/settings/serviceaccounts/adminsdk
+
+* secret file should be named as firebase_secret.json
+* secret file should be placed at the top of the project
+```
+
+How to run
+
+```bash
+npm run initfs
+```
+
+Fore more information, see [resetFirestore.js](resetFirestore.js)
+
+```js
+// you can change initial data in this function
+async function initializeFireStore() {
+    console.log('FireStore initialize result');
+
+    /**
+     * collection 이름: userRoles
+     * 문서 이름: roleId (Number, auto increment)
+     * 필드: {
+     *   roleId, roleName
+     * }
+     * 설명: 유저 역할 (관리자, 일반 유저 등)
+     */
+    const user_roles_create_result = await init_collection('userRoles', async () => {
+        let role_id = (await getLastId('userRoles', 'roleId')) + 1;
+        role_id = await create_user_role('ADMIN', role_id);
+        sleep(1);
+        role_id = await create_user_role('USER', role_id);
+        sleep(1);
+    });
+    console.log(`userRoles: ${user_roles_create_result}`);
+
+    ...
+}
+```
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
