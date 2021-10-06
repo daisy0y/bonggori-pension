@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { dataLoadState } from 'recoil/ui';
-import firebase from 'firebase';
+import firebase from 'lib/firebase';
 import 'firebase/firestore';
 import { firestoreData } from 'models/Firestore/firestore.model';
 
