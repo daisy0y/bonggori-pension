@@ -11,3 +11,5 @@ export * from './Tabs';
 export * from './Banners';
 export * from './Fallback';
 export * from './Items';
+export * from './Boards';
+export * from './Modal';
