@@ -5,7 +5,7 @@ import { TableColumnsType } from 'antd';
 
 import { BoardButtons, BoardHeader, Boards, BoardWrtieModal, CommonButton, PageHeader } from 'components';
 import { useTabletSize } from 'lib/hooks';
-import { dummy } from 'lib/constants';
+import { boardDummy } from 'lib/constants';
 
 const StyledBoardPage = styled.div`
   p.answer-complete {
@@ -152,11 +152,11 @@ const Board = () => {
   return (
     <StyledBoardPage className="container">
       <PageHeader></PageHeader>
-      <BoardHeader handleWriteSubmit={handleWriteModal} isLogin={isLogin} count={dummy.length}></BoardHeader>
+      <BoardHeader handleWriteSubmit={handleWriteModal} isLogin={isLogin} count={boardDummy.length}></BoardHeader>
       <Boards
         isPc={isPc}
         columns={columns}
-        dataSource={dummy.map((data, i, array) => {
+        dataSource={boardDummy.map((data, i, array) => {
           data['no'] = array.length - i;
           return data;
         })}

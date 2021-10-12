@@ -19,7 +19,7 @@ export const pageHeaderTitle: {
   },
 };
 
-export const dummy = [
+export const boardDummy = [
   {
     answer: undefined,
     boardContent: '이거는 한줄짜리에요',

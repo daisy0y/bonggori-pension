@@ -15,7 +15,7 @@ const StyledAnswerItem = styled.div`
   margin-top: 20px;
   padding: 20px;
   .answer-writer {
-    font-weight: bold;
+    font-weight: 600;
     margin-right: 20px;
   }
 `;

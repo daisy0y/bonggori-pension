@@ -93,7 +93,9 @@ export const BoardForm = (props: BoardFormProps) => {
   const { isPc, handleWriteModal, handleSubmit } = props;
   const [form] = Form.useForm();
   const { TextArea } = Input;
-
+  const CustomCommonButton = styled(CommonButton)`
+    border: 0;
+  `;
   useEffect(() => {
     return () => {
       form.resetFields();
@@ -104,29 +106,64 @@ export const BoardForm = (props: BoardFormProps) => {
     <StyledBoardForm ispc={isPc.toString()} form={form} onFinish={handleSubmit}>
       <header className="form-header">
         <h1>글쓰기</h1>
-        <CommonButton style={{ border: 0 }} onClick={handleWriteModal}>
-          닫기
-        </CommonButton>
+        <CustomCommonButton onClick={handleWriteModal}>닫기</CustomCommonButton>
       </header>
 
       <Form.Item>
         <p className="board-title">제목</p>
-        <Form.Item name="boardTitle" rules={[{ required: true, message: '제목을 입력해주세요' }]} noStyle>
+        <Form.Item
+          name="boardTitle"
+          rules={[
+            {
+              required: true,
+              message: '제목을 입력해주세요',
+            },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (30 < value.length) {
+                  form.setFieldsValue({
+                    boardTitle: getFieldValue('boardTitle').substr(0, 30),
+                  });
+                  return Promise.reject(new Error('최대 30글자까지 입력 할 수 있습니다.'));
+                } else {
+                  return Promise.resolve();
+                }
+              },
+            }),
+          ]}
+          noStyle
+        >
           <Input className="input-styled title" maxLength={30} />
         </Form.Item>
       </Form.Item>
 
       <Form.Item>
         <p className="content-title">내용</p>
-        <Form.Item name="boardContent" rules={[{ required: true, message: '내용을 입력해주세요' }]} noStyle>
+        <Form.Item
+          name="boardContent"
+          rules={[
+            { required: true, message: '내용을 입력해주세요' },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (500 < value.length) {
+                  form.setFieldsValue({
+                    boardTitle: getFieldValue('boardContent').substr(0, 500),
+                  });
+                  return Promise.reject(new Error('최대 500글자까지 입력 할 수 있습니다.'));
+                } else {
+                  return Promise.resolve();
+                }
+              },
+            }),
+          ]}
+          noStyle
+        >
           <TextArea className="input-styled text-area" showCount maxLength={500} />
         </Form.Item>
       </Form.Item>
 
       <Form.Item>
-        <CommonButton htmlType="submit" style={{ border: 0 }}>
-          글쓰기
-        </CommonButton>
+        <CustomCommonButton htmlType="submit">글쓰기</CustomCommonButton>
       </Form.Item>
     </StyledBoardForm>
   );

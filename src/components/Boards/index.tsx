@@ -1,7 +1,6 @@
-import React from 'react';
-
 import { Table, TableColumnsType } from 'antd';
 import styled from 'styled-components';
+
 import { AnswerItem } from 'components';
 
 interface BoardProps {
@@ -36,12 +35,12 @@ export const Boards = (props: BoardProps) => {
                 <p key={index}>{text}</p>
               ))}
             </section>
-            {record?.answer ? <AnswerItem answer={record?.answer}></AnswerItem> : <></>}
+            {record?.answer ? <AnswerItem answer={record?.answer} /> : <></>}
           </>
         ),
         rowExpandable: (record: any) => record?.boardContent !== 'Not Expandable',
         expandedRowClassName: () => 'board-content',
       }}
-    ></StyledBoards>
+    />
   );
 };
