@@ -14,3 +14,14 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.container {
+  width: 1440px;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 750px) {
+  .container {
+    width: 750px;
+  }
+}

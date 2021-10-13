@@ -9,6 +9,7 @@ import { initFirebase } from 'lib/initFirebase';
 
 import 'antd/dist/antd.css';
 import '../assets/reset.css';
+import 'styles/globals.css';
 
 const theme = {
   testColor: '#ff4c01',

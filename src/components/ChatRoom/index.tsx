@@ -113,6 +113,7 @@ export const ChatRoom = (props: ChatRoomProps) => {
   const [value, loading] = useCollection<MessageTypes>(
     firebase.firestore().collection('messages').orderBy('createdAt'),
   );
+
   const [user] = useAuthState(firebase.auth());
 
   const [form] = Form.useForm();
@@ -185,7 +186,7 @@ export const ChatRoom = (props: ChatRoomProps) => {
         <div ref={messageRef} />
       </section>
 
-      <StyledChatForm form={form} onFinish={formData => handleSubmit(formData)}>
+      <StyledChatForm form={form} onFinish={handleSubmit}>
         <Form.Item className="button-container">
           <Form.Item name="message" className="input-container">
             <Input className="chat-input" placeholder="무엇을 도와드릴까요?" autoFocus maxLength={120} />
