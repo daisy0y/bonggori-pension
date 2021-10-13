@@ -36,3 +36,5 @@ yarn-error.log*
 
 # secret
 firebase_secret.json
+
+package-lock.json

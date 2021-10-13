@@ -1,3 +1,3 @@
-import { firestore, useFirestore } from 'hooks';
+import { firestore, useFirestore } from 'lib/hooks';
 
 export const useRoomTypes = () => useFirestore(firestore.collection('roomTypes'), []);

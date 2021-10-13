@@ -9,11 +9,12 @@ const { TabPane } = Tabs;
 interface RoomTabProps extends TabsProps {
   tabList: MainRooms[];
   onChange: (tab) => void;
+  onClick: (room) => void;
   roomContent: ReactNode;
 }
 
 export const CommonTab = (props: RoomTabProps) => {
-  const { roomContent, tabList, onChange, ...rest } = props;
+  const { roomContent, tabList, onChange, onClick, ...rest } = props;
   return (
     <Tabs onChange={onChange} {...rest}>
       {tabList.map(tab => {
