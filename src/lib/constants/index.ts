@@ -19,6 +19,25 @@ export const pageHeaderTitle: {
   },
 };
 
+export const MAIN_NAV_LIST = [
+  {
+    title: '객실안내',
+    url: '/rooms',
+  },
+  {
+    title: 'FAQ',
+    url: '/board',
+  },
+  {
+    title: '실시간 예약',
+    url: '/reservation',
+  },
+  {
+    title: '정보안내',
+    url: '/info',
+  },
+];
+
 export const boardDummy = [
   {
     answer: undefined,

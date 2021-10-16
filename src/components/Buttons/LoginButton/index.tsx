@@ -9,7 +9,12 @@ import { logoutApi } from 'apis/auth';
 
 import { LOGIN } from 'lib/routers';
 
-export const LoginButton = () => {
+interface LoginButtonProps {
+  setMenuButtonToggle: (status: boolean) => void;
+}
+
+export const LoginButton = (props: LoginButtonProps) => {
+  const { setMenuButtonToggle } = props;
   const setUserEmailState = useSetRecoilState(userEmailState);
   const isLogin = useRecoilValue(isLoginSelector);
   const router = useRouter();
@@ -19,6 +24,7 @@ export const LoginButton = () => {
       logout();
     } else {
       router.push(LOGIN);
+      setMenuButtonToggle(false);
     }
   }, [isLogin]);
 
