@@ -58,15 +58,19 @@ export const MainNav = (props: MainNavProps) => {
     <StyledMainNav isPc={isPc}>
       <ul>
         {MAIN_NAV_LIST.map((nav, idx) => (
-          <li className={`nav-list ${path === nav.url ? 'active' : ''}`} key={idx}>
-            <Link href={nav.url}>{nav.title}</Link>
+          <li className={`nav-list ${path === nav.url ? 'active' : ''}`} key={idx} onClick={handleMenuToggle}>
+            <Link href={nav.url}>
+              <a>{nav.title}</a>
+            </Link>
           </li>
         ))}
       </ul>
       <ul>
         {isLogin && (
-          <li className={`nav-list ${path === '/mypage' ? 'active' : ''}`}>
-            <Link href="/mypage">MY PAGE</Link>
+          <li className={`nav-list ${path === '/mypage' ? 'active' : ''}`} onClick={handleMenuToggle}>
+            <Link href="/mypage">
+              <a>MY PAGE</a>
+            </Link>
           </li>
         )}
         <li>
