@@ -1,11 +1,12 @@
+import Link from 'next/link';
+
 import styled from 'styled-components';
 
 import { LoginButton } from 'components';
 import { MAIN_NAV_LIST } from 'lib/constants';
 
 interface MainNavProps {
-  setMenuButtonToggle: (status: boolean) => void;
-  handleMovePage: (url: string) => void;
+  handleMenuToggle: () => void;
   path: string;
   isLogin: boolean;
   isPc: boolean;
@@ -51,29 +52,25 @@ const StyledMainNav = styled.nav<StyledMainNavProps>`
 `;
 
 export const MainNav = (props: MainNavProps) => {
-  const { setMenuButtonToggle, handleMovePage, path, isLogin, isPc } = props;
+  const { handleMenuToggle, path, isLogin, isPc } = props;
 
   return (
     <StyledMainNav isPc={isPc}>
       <ul>
         {MAIN_NAV_LIST.map((nav, idx) => (
-          <li
-            className={`nav-list ${path === nav.url ? 'active' : ''}`}
-            key={idx}
-            onClick={() => handleMovePage(nav.url)}
-          >
-            {nav.title}
+          <li className={`nav-list ${path === nav.url ? 'active' : ''}`} key={idx}>
+            <Link href={nav.url}>{nav.title}</Link>
           </li>
         ))}
       </ul>
       <ul>
         {isLogin && (
-          <li className={`nav-list ${path === '/mypage' ? 'active' : ''}`} onClick={() => handleMovePage('/mypage')}>
-            마이페이지
+          <li className={`nav-list ${path === '/mypage' ? 'active' : ''}`}>
+            <Link href="/mypage">MY PAGE</Link>
           </li>
         )}
         <li>
-          <LoginButton setMenuButtonToggle={setMenuButtonToggle} />
+          <LoginButton handleMenuToggle={handleMenuToggle} />
         </li>
       </ul>
     </StyledMainNav>

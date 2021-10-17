@@ -64,18 +64,13 @@ export const MainHeader = () => {
   const path = router.pathname;
 
   const handleMenuToggle = () => {
-    setMenuButtonToggle(prev => !prev);
+    if (!isPc) {
+      setMenuButtonToggle(prev => !prev);
+    }
   };
 
   const handleGoMain = useCallback(() => {
     router.push(MAIN);
-  }, []);
-
-  const handleMovePage = useCallback((url: string) => {
-    router.push(url);
-    if (!isPc) {
-      handleMenuToggle();
-    }
   }, []);
 
   return (
@@ -84,28 +79,16 @@ export const MainHeader = () => {
         <h1 id="logo" onClick={handleGoMain}>
           BGR
         </h1>
-        <StyledCommonButton onClick={handleMenuToggle}>{menuButtonToggle ? 'CLOSE' : 'MENU'}</StyledCommonButton>
-
-        {isPc && (
-          <MainNav
-            isPc={isPc}
-            isLogin={isLogin}
-            handleMovePage={handleMovePage}
-            path={path}
-            setMenuButtonToggle={setMenuButtonToggle}
-          />
+        {!isPc && (
+          <StyledCommonButton onClick={handleMenuToggle}>{menuButtonToggle ? 'CLOSE' : 'MENU'}</StyledCommonButton>
         )}
+
+        {isPc && <MainNav isPc={isPc} isLogin={isLogin} path={path} handleMenuToggle={handleMenuToggle} />}
       </div>
 
       {!isPc && (
         <div className="mobile-menu">
-          <MainNav
-            isPc={isPc}
-            isLogin={isLogin}
-            handleMovePage={handleMovePage}
-            path={path}
-            setMenuButtonToggle={setMenuButtonToggle}
-          />
+          <MainNav isPc={isPc} isLogin={isLogin} path={path} handleMenuToggle={handleMenuToggle} />
         </div>
       )}
     </StyledMainHeader>

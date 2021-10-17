@@ -10,22 +10,28 @@ import { logoutApi } from 'apis/auth';
 import { LOGIN } from 'lib/routers';
 
 interface LoginButtonProps {
-  setMenuButtonToggle: (status: boolean) => void;
+  handleMenuToggle: () => void;
 }
 
 export const LoginButton = (props: LoginButtonProps) => {
-  const { setMenuButtonToggle } = props;
+  const { handleMenuToggle } = props;
   const setUserEmailState = useSetRecoilState(userEmailState);
   const isLogin = useRecoilValue(isLoginSelector);
   const router = useRouter();
 
   const handleLoginLogout = useCallback(() => {
     if (isLogin) {
+      const confirm = window.confirm('로그아웃 하시겠습니까?');
+      if (confirm) {
+        handleMenuToggle();
+      } else {
+        return;
+      }
       logout();
     } else {
       router.push(LOGIN);
-      setMenuButtonToggle(false);
     }
+    handleMenuToggle();
   }, [isLogin]);
 
   const logout = () => {
