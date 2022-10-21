@@ -8,10 +8,7 @@ import { MainHeader, MainFooter, Loading, Chat } from 'components';
 import 'antd/dist/antd.css';
 import '../assets/reset.css';
 import 'styles/globals.css';
-
-const theme = {
-  testColor: '#ff4c01',
-};
+import { theme } from 'styles/Theme';
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -21,7 +18,7 @@ function MyApp({ Component, pageProps }) {
         <MainHeader />
         <Component {...pageProps} />
         <Chat />
-        <MainFooter />
+        {/* <MainFooter /> */}
       </RecoilRoot>
     </ThemeProvider>
   );
