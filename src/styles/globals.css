@@ -2,9 +2,10 @@
 
 html,
 body {
+  max-width: 750px;
+  margin: 0 auto;
   padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard Variable", Pretendard, Roboto, "Noto Sans KR", "Segoe UI", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }
 
 a {
@@ -17,12 +18,5 @@ a {
 }
 
 .container {
-  width: 1440px;
-  margin: 0 auto;
-}
-
-@media screen and (max-width: 750px) {
-  .container {
-    width: 750px;
-  }
+  width: 750px;
 }

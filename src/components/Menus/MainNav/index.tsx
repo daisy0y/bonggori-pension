@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { LoginButton } from 'components';
 import { MAIN_NAV_LIST } from 'lib/constants';
+import { theme } from 'styles/Theme';
 
 interface MainNavProps {
   handleMenuToggle: () => void;
@@ -18,23 +19,22 @@ interface StyledMainNavProps {
 
 const StyledMainNav = styled.nav<StyledMainNavProps>`
   width: 100%;
+  max-width: ${theme.maxWidth};
   display: flex;
   justify-content: space-between;
-  ${props => !props.isPc && 'flex-direction: column;'};
+  flex-direction: column;
   ul {
-    ${props => !props.isPc && 'flex-direction: column;'};
+    flex-direction: column;
     height: 100%;
     display: flex;
     align-items: center;
-    ${props => props.isPc && 'margin-left: 30px'};
   }
 
   li.nav-list {
     font-size: 1.1rem;
-    color: #000;
+    color: ${theme.white};
     transition: all 0.3s;
     cursor: pointer;
-    ${props => !props.isPc && 'margin-bottom: 15px'};
 
     &:hover {
       font-weight: 600;

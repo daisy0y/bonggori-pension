@@ -18,9 +18,9 @@ const StyledBoardHeader = styled.div`
     font-weight: bold;
   }
 
-  @media screen and (max-width: 750px) {
+  /* @media screen and (max-width: 750px) {
     padding: 0 40px;
-  }
+  } */
 `;
 
 export const BoardHeader = (props: BoardHeaderProps) => {

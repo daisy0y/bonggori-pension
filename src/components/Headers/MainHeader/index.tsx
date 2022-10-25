@@ -9,6 +9,9 @@ import { MAIN } from 'lib/routers';
 import { MainNav } from 'components';
 import { useTabletSize } from 'lib/hooks';
 import { CommonButton } from 'components/Buttons';
+import { CloseOutlined, MenuOutlined } from '@ant-design/icons';
+import { theme } from 'styles/Theme';
+import { Drawer } from 'antd';
 
 interface StyledMainHeaderProps {
   isPc: boolean;
@@ -16,45 +19,29 @@ interface StyledMainHeaderProps {
 }
 
 const StyledMainHeader = styled.header<StyledMainHeaderProps>`
-  position: sticky;
+  position: fixed;
+  width: 100%;
+  max-width: ${theme.maxWidth};
+
   top: 0;
-  z-index: 9999;
-  background: #fff;
+  z-index: 5;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: space-between;
   padding: 20px;
   box-sizing: border-box;
-  ${props => props.isPc && `border-bottom: 1px solid #c8c8c8;`};
-
-  #logo {
-    cursor: pointer;
-    display: block;
-  }
 
   .header-list-container {
     width: 100%;
+    max-width: ${theme.maxWidth};
     display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
-  .mobile-menu {
-    padding-top: ${props => props.menuButtonToggle && '48%'};
-    height: ${props => (props.menuButtonToggle ? 'calc(100vh - 80px)' : '0')};
-    opacity: ${props => (props.menuButtonToggle ? '1' : '0')};
-    transition: all 0.5s;
-  }
 `;
 
-const StyledCommonButton = styled(CommonButton)`
-  border: 0;
-  box-shadow: none;
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin: auto 0;
-  position: absolute;
-  right: 10px;
-`;
 
 export const MainHeader = () => {
   const [menuButtonToggle, setMenuButtonToggle] = useState<boolean>(false);
@@ -72,25 +59,35 @@ export const MainHeader = () => {
   const handleGoMain = useCallback(() => {
     router.push(MAIN);
   }, []);
+  const [open, setOpen] = useState(false);
 
+  const showDrawer = () => {
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
   return (
     <StyledMainHeader isPc={isPc} menuButtonToggle={menuButtonToggle}>
       <div className="header-list-container">
-        <h1 id="logo" onClick={handleGoMain}>
-          BGR
-        </h1>
-        {!isPc && (
-          <StyledCommonButton onClick={handleMenuToggle}>{menuButtonToggle ? 'CLOSE' : 'MENU'}</StyledCommonButton>
-        )}
 
-        {isPc && <MainNav isPc={isPc} isLogin={isLogin} path={path} handleMenuToggle={handleMenuToggle} />}
+        <MenuOutlined onClick={showDrawer} style={{ fontSize: '1.2rem', color: theme.white }} />
+
       </div>
-
-      {!isPc && (
-        <div className="mobile-menu">
-          <MainNav isPc={isPc} isLogin={isLogin} path={path} handleMenuToggle={handleMenuToggle} />
+      <Drawer
+        placement="right"
+        onClose={onClose}
+        open={open}
+        closable={false}
+        contentWrapperStyle={{ width: '100%', maxWidth: theme.maxWidth }}
+        bodyStyle={{ background: theme.menuBackground }}
+      >
+        <div style={{ textAlign: 'right' }}>
+          <CloseOutlined style={{ color: theme.white, fontSize: '1.2rem' }} onClick={onClose} />
         </div>
-      )}
+        <MainNav isPc={isPc} isLogin={isLogin} path={path} handleMenuToggle={handleMenuToggle} />
+      </Drawer>
     </StyledMainHeader>
   );
 };
