@@ -8,8 +8,8 @@ import { ChatRoom } from 'components/ChatRoom';
 const StyledChat = styled.div`
   .chat-button {
     position: fixed;
-    bottom: 40px;
-    right: 60px;
+    bottom: 100px;
+    right: 30px;
     font-size: 3rem;
     color: rgb(86, 152, 255);
     cursor: pointer;

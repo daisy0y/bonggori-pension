@@ -1,24 +1,18 @@
 import { useRouter } from 'next/router';
-import { useCallback, useState } from 'react';
-import { useRecoilValue } from 'recoil';
-import { isLoginSelector } from 'recoil/auth';
+import { useCallback, useEffect, useState } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import styled from 'styled-components';
 
-import { MAIN } from 'lib/routers';
 import { MainNav } from 'components';
-import { useTabletSize } from 'lib/hooks';
-import { CommonButton } from 'components/Buttons';
-import { CloseOutlined, MenuOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, CloseOutlined, MenuOutlined } from '@ant-design/icons';
 import { theme } from 'styles/Theme';
 import { Drawer } from 'antd';
+import Link from 'next/link';
+import { HEADER_BLACK_LIST } from 'lib/constants';
+import { isLoginSelector, userState } from 'recoil/user';
 
-interface StyledMainHeaderProps {
-  isPc: boolean;
-  menuButtonToggle: boolean;
-}
-
-const StyledMainHeader = styled.header<StyledMainHeaderProps>`
+const StyledMainHeader = styled.header`
   position: fixed;
   width: 100%;
   max-width: ${theme.maxWidth};
@@ -44,23 +38,12 @@ const StyledMainHeader = styled.header<StyledMainHeaderProps>`
 
 
 export const MainHeader = () => {
-  const [menuButtonToggle, setMenuButtonToggle] = useState<boolean>(false);
-  const { isPc } = useTabletSize();
   const router = useRouter();
   const isLogin = useRecoilValue(isLoginSelector);
+
   const path = router.pathname;
-
-  const handleMenuToggle = () => {
-    if (!isPc) {
-      setMenuButtonToggle(prev => !prev);
-    }
-  };
-
-  const handleGoMain = useCallback(() => {
-    router.push(MAIN);
-  }, []);
   const [open, setOpen] = useState(false);
-
+  const checkHeaderColor = HEADER_BLACK_LIST.includes(path)
   const showDrawer = () => {
     setOpen(true);
   };
@@ -68,11 +51,15 @@ export const MainHeader = () => {
   const onClose = () => {
     setOpen(false);
   };
-  return (
-    <StyledMainHeader isPc={isPc} menuButtonToggle={menuButtonToggle}>
-      <div className="header-list-container">
 
-        <MenuOutlined onClick={showDrawer} style={{ fontSize: '1.2rem', color: theme.white }} />
+
+
+  return (
+    <StyledMainHeader >
+      <div className="header-list-container">
+        {path !== '/' && <ArrowLeftOutlined style={{ fontSize: '1.2rem', color: checkHeaderColor ? theme.black : theme.white }} onClick={() => router.back()} />}
+
+        <MenuOutlined onClick={showDrawer} style={{ fontSize: '1.2rem', color: checkHeaderColor ? theme.black : theme.white, position: 'absolute', top: 20, right: 20 }} />
 
       </div>
       <Drawer
@@ -86,7 +73,7 @@ export const MainHeader = () => {
         <div style={{ textAlign: 'right' }}>
           <CloseOutlined style={{ color: theme.white, fontSize: '1.2rem' }} onClick={onClose} />
         </div>
-        <MainNav isPc={isPc} isLogin={isLogin} path={path} handleMenuToggle={handleMenuToggle} />
+        <MainNav isLogin={isLogin} path={path} handleMenuToggle={onClose} />
       </Drawer>
     </StyledMainHeader>
   );

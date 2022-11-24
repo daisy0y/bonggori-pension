@@ -7,17 +7,17 @@ import { selectRoomState } from 'recoil/rooms';
 
 import { CommonTab as RoomsTab, CommonBanner, RoomsItem } from 'components';
 import { MainRooms, RoomContent } from 'models/Rooms/rooms.model';
-import { useRoomTypes, useRooms } from 'lib/hooks';
+// import { useRoomTypes, useRooms } from 'lib/hooks';
 import { getMainRoomsType } from 'enums';
 
 const Rooms = () => {
-  const { data: tabList } = useRoomTypes();
-  const [currentTab, setCurrentTab] = useState<string>(tabList[0]?.roomTypeName || '고미');
+  // const { data: tabList } = useRoomTypes();
+  // const [currentTab, setCurrentTab] = useState<string>(tabList[0]?.roomTypeName || '고미');
 
   const router = useRouter();
 
-  const { data: roomList } = useRooms(currentTab);
-  const [rooms, setRooms] = useState<RoomContent[]>(roomList as RoomContent[]);
+  // const { data: roomList } = useRooms(currentTab);
+  // const [rooms, setRooms] = useState<RoomContent[]>(roomList as RoomContent[]);
 
   const setSelectRoomData = useSetRecoilState(selectRoomState);
 
@@ -27,26 +27,26 @@ const Rooms = () => {
     return router.push(`/rooms/${enRoomType}-${room.roomId}`);
   };
 
-  const roomContent = useMemo(
-    () =>
-      rooms.map((room, idx) => (
-        <RoomsItem key={idx} roomName={room.roomName} roomImage="" onClick={() => handleMoveToDetailPage(room)} />
-      )),
-    [rooms],
-  );
+  // const roomContent = useMemo(
+  //   () =>
+  //     rooms.map((room, idx) => (
+  //       <RoomsItem key={idx} roomName={room.roomName} roomImage="" onClick={() => handleMoveToDetailPage(room)} />
+  //     )),
+  //   [rooms],
+  // );
 
-  const handleGetRoomsData = useCallback(
-    selecTab => {
-      setCurrentTab(selecTab);
-    },
-    [currentTab],
-  );
+  // const handleGetRoomsData = useCallback(
+  //   selecTab => {
+  //     setCurrentTab(selecTab);
+  //   },
+  //   [currentTab],
+  // );
 
-  useEffect(() => {
-    if (roomList.length > 0) {
-      setRooms(roomList as RoomContent[]);
-    }
-  }, [roomList]);
+  // useEffect(() => {
+  //   if (roomList.length > 0) {
+  //     setRooms(roomList as RoomContent[]);
+  //   }
+  // }, [roomList]);
 
   return (
     <>
@@ -55,12 +55,12 @@ const Rooms = () => {
       </Head>
       <div>
         <CommonBanner />
-        <RoomsTab
+        {/* <RoomsTab
           tabList={(tabList as MainRooms[]) || []}
           onChange={handleGetRoomsData}
           onClick={handleMoveToDetailPage}
           roomContent={roomContent}
-        />
+        /> */}
       </div>
     </>
   );

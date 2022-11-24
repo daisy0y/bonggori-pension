@@ -6,7 +6,6 @@ import { atom, useRecoilValue } from 'recoil';
 import { selectRoomState } from 'recoil/rooms';
 
 import { RoomContent } from '../../models/Rooms/rooms.model';
-import { firestore, useFirestore } from 'hooks';
 
 const RoomDetail = () => {
   const getSelectRoomData = useRecoilValue(selectRoomState);

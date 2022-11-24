@@ -1,7 +1,10 @@
-import firebase from "firebase";
+// import firebase from "firebase";
 
-export interface firestoreData {
-    data: firebase.firestore.DocumentData[];
-    loading: boolean;
-    error: firebase.firestore.FirestoreError;
-}
+// export interface firestoreData {
+//     data: firebase.firestore.DocumentData[];
+//     loading: boolean;
+//     error: firebase.firestore.FirestoreError;
+// }
+
+
+export default 'gg'

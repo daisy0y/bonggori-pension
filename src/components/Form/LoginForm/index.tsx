@@ -4,17 +4,28 @@ import { useSetRecoilState } from 'recoil';
 import { userEmailState } from 'recoil/auth';
 
 import styled from 'styled-components';
-import { Button, Form } from 'antd';
+import { Button, Form, Input } from 'antd';
 
-import { LoginJoinFormInput, LoginJoinLayout } from 'components';
-
-import { useTabletSize } from 'lib/hooks';
 import { JOIN, MAIN } from 'lib/routers';
 
 import { loginApi } from 'apis/auth';
+import { theme } from 'styles/Theme';
+import { userState } from 'recoil/user';
 
-const StyledLogin = styled.div<{ isPc: boolean }>`
-  width: ${props => (props.isPc ? '50%' : '100%')};
+const Container = styled.div`
+
+`;
+
+
+const StyledLoginJoinFormInput = styled(Form.Item)`
+  border-bottom: 1px solid ${theme.gray};
+  .password {
+    margin-bottom: 2.5rem;
+  }
+`;
+
+const StyledLogin = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -26,36 +37,26 @@ const StyledLogin = styled.div<{ isPc: boolean }>`
 `;
 
 const StyledLoginForm = styled(Form)`
-  margin: auto;
-`;
-
-const StyledLoginExtraArea = styled.div`
+  /* margin: auto; */
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  min-height: 130px;
-  align-items: center;
 `;
 
 const StyledLoginButton = styled(Button)`
-  background-color: #000 !important;
-  color: #fff !important;
-  font-weight: bold;
-  width: 100%;
-  border: none;
-  height: 82px;
-  font-size: 1.5rem;
+width: 100%;
+/* background-color: ${theme.black} !important; */
+background-color: #273617 !important;
+color: ${theme.white};
+border: none;
+font-size: ${theme.size_18} !important; 
+font-weight: ${theme.weight_bold};
+height: 50px !important;
 `;
 
 export const LoginForm = () => {
   const setUserEmailState = useSetRecoilState(userEmailState);
+  const setUserState = useSetRecoilState(userState);
 
-  const { isPc } = useTabletSize();
   const router = useRouter();
-
-  const handleClickJoin = useCallback(() => {
-    router.push(JOIN);
-  }, []);
 
   const handleSubmit = useCallback(
     async values => {
@@ -65,45 +66,45 @@ export const LoginForm = () => {
 
       if (userEmail) {
         router.push(MAIN);
-        setUserEmailState(userEmail);
+        setUserState(userEmail)
       }
     },
-    [loginApi],
+    // [loginApi],
+    [],
   );
 
   return (
-    <LoginJoinLayout>
-      <StyledLogin isPc={isPc}>
-        <h2>LOGIN</h2>
-        <StyledLoginForm onFinish={handleSubmit}>
-          <LoginJoinFormInput
-            name="id"
-            label="ID"
-            rules={[
-              { required: true, message: 'ID를 입력해주세요' },
-              {
-                type: 'email',
-                message: 'email 형식에 맞지 않습니다.',
-              },
-            ]}
-          />
-          <LoginJoinFormInput
-            name="pw"
-            label="PW"
-            rules={[{ required: true, message: '비밀번호를 입력해주세요' }]}
-            inputProps={{
-              type: 'password',
-            }}
-          />
-          <StyledLoginExtraArea>
-            <div onClick={handleClickJoin}>회원가입</div>
-            <div>아이디/비밀번호 찾기</div>
-          </StyledLoginExtraArea>
-          <Form.Item>
-            <StyledLoginButton htmlType="submit">로그인</StyledLoginButton>
-          </Form.Item>
-        </StyledLoginForm>
-      </StyledLogin>
-    </LoginJoinLayout>
+    <Container>
+      <StyledLoginForm onFinish={handleSubmit}>
+
+        <StyledLoginJoinFormInput
+          name="id"
+          rules={[
+            { required: true, message: 'ID를 입력해주세요' },
+            {
+              type: 'email',
+              message: 'email 형식에 맞지 않습니다.',
+            },
+          ]}
+          hasFeedback={true}
+        >
+          <Input placeholder='이메일을 입력해주세요.' bordered={false} />
+        </StyledLoginJoinFormInput>
+
+        <StyledLoginJoinFormInput
+          className='password'
+          name="pw"
+          hasFeedback={true}
+          rules={[{ required: true, message: '비밀번호를 입력해주세요' }]}
+        >
+          <Input.Password placeholder='비밀번호를 입력해주세요.' bordered={false} />
+        </StyledLoginJoinFormInput>
+
+        <Form.Item>
+          <StyledLoginButton shape='round' size='large' htmlType="submit">로그인</StyledLoginButton>
+        </Form.Item>
+
+      </StyledLoginForm>
+    </Container>
   );
 };

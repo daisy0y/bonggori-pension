@@ -5,19 +5,17 @@ import styled from 'styled-components';
 import { LoginButton } from 'components';
 import { MAIN_NAV_LIST } from 'lib/constants';
 import { theme } from 'styles/Theme';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 interface MainNavProps {
   handleMenuToggle: () => void;
   path: string;
   isLogin: boolean;
-  isPc: boolean;
 }
 
-interface StyledMainNavProps {
-  isPc: boolean;
-}
 
-const StyledMainNav = styled.nav<StyledMainNavProps>`
+const StyledMainNav = styled.nav`
   width: 100%;
   max-width: ${theme.maxWidth};
   display: flex;
@@ -41,10 +39,6 @@ const StyledMainNav = styled.nav<StyledMainNavProps>`
       color: #1890ff;
       transition: all 0.3s;
     }
-
-    &:not(:last-child) {
-      ${props => props.isPc && 'margin-right: 15px'};
-    }
   }
   .active {
     color: #1890ff !important;
@@ -52,10 +46,11 @@ const StyledMainNav = styled.nav<StyledMainNavProps>`
 `;
 
 export const MainNav = (props: MainNavProps) => {
-  const { handleMenuToggle, path, isLogin, isPc } = props;
+  const { handleMenuToggle, path, isLogin } = props;
+
 
   return (
-    <StyledMainNav isPc={isPc}>
+    <StyledMainNav >
       <ul>
         {MAIN_NAV_LIST.map((nav, idx) => (
           <li className={`nav-list ${path === nav.url ? 'active' : ''}`} key={idx} onClick={handleMenuToggle}>

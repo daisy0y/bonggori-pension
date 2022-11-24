@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import firebase from 'firebase';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollection } from 'react-firebase-hooks/firestore';
@@ -26,8 +25,8 @@ interface MessageTypes {
 }
 const StyledChatRoom = styled.div`
   position: fixed;
-  right: 40px;
-  bottom: 30px;
+  right: 10px;
+  bottom: 10px;
   width: 20vw;
   min-width: 250px;
   min-height: 520px;
