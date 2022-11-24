@@ -1,13 +1,14 @@
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { isLoginSelector, userEmailState } from 'recoil/auth';
+import { userEmailState } from 'recoil/auth';
 
 import { CommonButton } from 'components';
 
 import { logoutApi } from 'apis/auth';
 
 import { LOGIN } from 'lib/routers';
+import { isLoginSelector, userState } from 'recoil/user';
 
 interface LoginButtonProps {
   handleMenuToggle: () => void;
@@ -18,6 +19,7 @@ export const LoginButton = (props: LoginButtonProps) => {
   const setUserEmailState = useSetRecoilState(userEmailState);
   const isLogin = useRecoilValue(isLoginSelector);
   const router = useRouter();
+  const setUserState = useSetRecoilState(userState);
 
   const handleLoginLogout = useCallback(() => {
     if (isLogin) {
@@ -36,7 +38,7 @@ export const LoginButton = (props: LoginButtonProps) => {
 
   const logout = () => {
     logoutApi();
-    setUserEmailState(null);
+    setUserState(undefined)
   };
 
   return (

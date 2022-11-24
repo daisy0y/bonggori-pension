@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import Image from "next/image";
-import firebase from 'firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { deleteSession, generateString, setSession, getSession } from 'lib/storage';
 import { Carousel } from 'antd';
@@ -11,6 +10,8 @@ import spring from '../../public/image/main/spring.jpg'
 import summer from '../../public/image/main/summer.jpg'
 import autumn from '../../public/image/main/autumn.jpg'
 import winter from '../../public/image/main/winter.jpg'
+import { ReservationButton } from 'components';
+import { getAuth } from 'firebase/auth';
 
 type Season = 'Spring' | 'Summer' | 'Autumn' | 'Winter'
 
@@ -58,11 +59,9 @@ const StyledTextContainer = styled.div`
 `;
 
 export default function Home(props: any) {
-  const [user] = useAuthState(firebase.auth());
-  const storageRef = firebase.storage().ref();
-  var listRef = storageRef.child('building');
   const [mainImage, setMainImage] = useState([])
   const [season, setSeason] = useState<Season>('Spring')
+
   const mainImages = [
     {
       key: 'Spring',
@@ -80,39 +79,6 @@ export default function Home(props: any) {
       key: 'Winter',
       url: winter
     }]
-
-
-  useEffect(() => {
-    // Find all the prefixes and items.
-    listRef.listAll()
-      .then((res) => {
-        res.prefixes.forEach((folderRef) => {
-          folderRef.getDownloadURL().then(url => console.log(url))
-          // console.log(folderRef, 'folderRef')
-          // All the prefixes under listRef.
-          // You may call listAll() recursively on them.
-        });
-        res.items.forEach((itemRef) => {
-          // console.log(itemRef, 'itemRef')
-          itemRef.getDownloadURL().then(url => setMainImage(prev => [...prev, url]))
-
-          // All the items under listRef.
-        });
-        // console.log(buildingArray, 'buildingArray')
-        // setMainImage([...buildingArray])
-      }).catch((error) => {
-        console.log(error, 'erorr')
-        // Uh-oh, an error occurred!
-      });
-  }, [])
-
-  useEffect(() => {
-    if (user) {
-      deleteSession('anonymous');
-    } else if (!getSession('anonymous')) {
-      setSession('anonymous', generateString());
-    }
-  }, [user]);
 
   const settings = {
     dots: true,
@@ -162,6 +128,7 @@ export default function Home(props: any) {
         })}
       </StyledCarousel>
 
+      <ReservationButton />
     </Container >
   )
 }

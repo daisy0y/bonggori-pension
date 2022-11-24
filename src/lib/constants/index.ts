@@ -38,6 +38,10 @@ export const MAIN_NAV_LIST = [
   },
 ];
 
+export const HEADER_BLACK_LIST = [
+  '/login','/join'
+]
+
 export const boardDummy = [
   {
     answer: undefined,
