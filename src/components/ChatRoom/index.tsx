@@ -9,15 +9,19 @@ import { SendOutlined } from '@ant-design/icons';
 import { getSession } from 'lib/storage';
 
 import { Messages } from 'components';
+import { getFirestore, query, collection, orderBy, serverTimestamp, addDoc, deleteDoc, doc, DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
+import firebase from 'lib/firebase';
+import { getAuth } from 'firebase/auth';
 
 interface ChatRoomProps {
   handleToggle: () => void;
 }
 
-interface MessageTypes {
+interface MessageTypes extends QueryDocumentSnapshot<DocumentData> {
   text: string;
   userName: string;
   uid: string;
+  id: string;
   createdAt: {
     nanoseconds: number;
     seconds: number;
@@ -107,32 +111,32 @@ const StyledChatForm = styled(Form)`
     }
   }
 `;
+
 export const ChatRoom = (props: ChatRoomProps) => {
   const { handleToggle } = props;
-  const [value, loading] = useCollection<MessageTypes>(
-    firebase.firestore().collection('messages').orderBy('createdAt'),
-  );
-
-  const [user] = useAuthState(firebase.auth());
+  const auth = getAuth(firebase);
+  const db = getFirestore(firebase);
+  const qry = query(collection(db, "messages"), orderBy('createdAt'))
+  const [value, loading, error] = useCollection(qry)
+  const [user] = useAuthState(auth);
 
   const [form] = Form.useForm();
   const messageRef = useRef<HTMLDivElement>(null);
   const anonymous = getSession('anonymous');
   const userId = user ? user.uid : anonymous;
 
-  const handleSubmit = formData => {
+  const handleSubmit = async (formData) => {
     if (!formData.message) {
       alert('메세지를 입력하세요');
     } else {
-      firebase
-        .firestore()
-        .collection('messages')
-        .add({
-          text: formData.message,
-          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-          userName: user ? user.email : anonymous,
-          uid: userId,
-        });
+
+      await addDoc(collection(db, "messages"), {
+        text: formData.message,
+        createdAt: serverTimestamp(),
+        userName: user ? user.email : anonymous,
+        uid: userId,
+      });
+
       messageRef.current.scrollIntoView({ block: 'end', behavior: 'smooth' });
       form.setFieldsValue({ message: '' });
     }
@@ -147,11 +151,11 @@ export const ChatRoom = (props: ChatRoomProps) => {
     return formattedDate;
   };
 
-  const removeChatData = (seconds: number, id: string) => {
+  const removeChatData = async (seconds: number, id: string) => {
     const now = new Date().getTime() / 1000;
     const messageDate = seconds;
     if (now - messageDate > 43200) {
-      firebase.firestore().collection('messages').doc(id).delete();
+      await deleteDoc(doc(db, "messages", id));
     }
   };
 
@@ -177,7 +181,7 @@ export const ChatRoom = (props: ChatRoomProps) => {
             const message = {
               ...msg.data(),
               id: msg.id,
-            };
+            } as MessageTypes;
             const date = message.createdAt?.seconds ? formatDate(new Date(message.createdAt?.seconds * 1000)) : null;
             return <Messages key={index} message={message} date={date} userId={userId} />;
           })}

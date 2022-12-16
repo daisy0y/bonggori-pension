@@ -12,6 +12,9 @@ import autumn from '../../public/image/main/autumn.jpg'
 import winter from '../../public/image/main/winter.jpg'
 import { ReservationButton } from 'components';
 import { getAuth } from 'firebase/auth';
+import { getFirestore, collection, query, orderBy } from 'firebase/firestore';
+import { useCollection } from 'react-firebase-hooks/firestore';
+import firebase from 'lib/firebase';
 
 type Season = 'Spring' | 'Summer' | 'Autumn' | 'Winter'
 
@@ -61,6 +64,18 @@ const StyledTextContainer = styled.div`
 export default function Home(props: any) {
   const [mainImage, setMainImage] = useState([])
   const [season, setSeason] = useState<Season>('Spring')
+
+  const db = getFirestore(firebase);
+  const qry = query(collection(db, "messages"), orderBy('createdAt'))
+  const [value, loading, error] = useCollection(
+    qry,
+    {
+      snapshotListenOptions: { includeMetadataChanges: true },
+    }
+  )
+
+  console.log(value, 'value')
+
 
   const mainImages = [
     {
