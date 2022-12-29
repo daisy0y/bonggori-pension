@@ -18,7 +18,12 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "baseUrl": "src",
-    "incremental": true
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
     "next-env.d.ts",
@@ -26,7 +31,8 @@
     "**/*.tsx",
     "src/pages/_document.ts",
     "src/components/Headers/index.tsㅌ",
-    "src/utils/resetFirestore.js"
+    "src/utils/resetFirestore.js",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"
