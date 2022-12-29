@@ -1,6 +1,6 @@
 module.exports = {
     reactStrictMode: true,
-    experimental: { images: { layoutRaw: true } },
+    experimental: {appDir: true, images: { layoutRaw: true } },
     images: {
         domains: ['firebasestorage.googleapis.com'],
       },

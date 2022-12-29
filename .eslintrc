@@ -34,7 +34,7 @@
     "prettier/prettier": "error", //포매팅 에러 표충,
     "react/display-name": "off"
   },
-  "ignorePatterns": ["node_modules/"],
+  "ignorePatterns": ["**/node_modules/**"],
   "settings": {
     "react": {
       "version": "detect" // 프로젝트 react 버저닝 확인

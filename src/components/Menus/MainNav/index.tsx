@@ -55,7 +55,7 @@ export const MainNav = (props: MainNavProps) => {
         {MAIN_NAV_LIST.map((nav, idx) => (
           <li className={`nav-list ${path === nav.url ? 'active' : ''}`} key={idx} onClick={handleMenuToggle}>
             <Link href={nav.url}>
-              <a>{nav.title}</a>
+              {nav.title}
             </Link>
           </li>
         ))}
@@ -64,7 +64,7 @@ export const MainNav = (props: MainNavProps) => {
         {isLogin && (
           <li className={`nav-list ${path === '/mypage' ? 'active' : ''}`} onClick={handleMenuToggle}>
             <Link href="/mypage">
-              <a>MY PAGE</a>
+              MY PAGE
             </Link>
           </li>
         )}

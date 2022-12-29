@@ -64,9 +64,7 @@ const LoginPage = () => {
       <StyledJoinText>
         <p>회원이 아니신가요?</p>
         <Link href={JOIN}>
-          <a>
-            회원 가입하러 가기
-          </a>
+          회원 가입하러 가기
         </Link>
       </StyledJoinText>
     </Container>
